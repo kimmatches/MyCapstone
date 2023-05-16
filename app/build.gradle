@@ -6,6 +6,9 @@ plugins {
 android {
     namespace 'com.example.mycapstone'
     compileSdk 33
+    buildFeatures{
+        viewBinding true
+    }
 
     defaultConfig {
         applicationId "com.example.mycapstone"
@@ -30,6 +33,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
 }
 
 dependencies {
@@ -41,4 +45,10 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    //QR 라이브러리
+    //QR-Code (minSDK: 23)
+    implementation ('com.journeyapps:zxing-android-embedded:3.6.0') { transitive = false }
+    implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
+
 }
