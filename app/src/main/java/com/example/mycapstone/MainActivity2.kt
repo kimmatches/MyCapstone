@@ -37,11 +37,11 @@ class MainActivity2 : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
 
-        //DB
-        db = InnerMapDB(this, "innermap.db")
-
-        floorsInner = db.getFloorsInner()
-        nodesPlace = db.getNodesPlace()
+//        //DB
+//        db = InnerMapDB(this, "innermap.db")
+//
+//        floorsInner = db.getFloorsInner()
+//        nodesPlace = db.getNodesPlace()
 
         //layout 연결
         setContentView(R.layout.activity_main2)

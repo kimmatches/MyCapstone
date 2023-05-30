@@ -3,6 +3,7 @@ package com.example.mycapstone
 import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.Drawable //?
+import android.media.Image
 import android.text.TextPaint
 import android.util.AttributeSet
 import android.view.View
@@ -28,7 +29,7 @@ class MapView @JvmOverloads constructor(context: Context?, attr: AttributeSet? =
     var h: Float? = null
 
     //뷰의 초기화 과정
-    private fun initialise() {invalidate()}
+//    private fun initialise() {invalidate()}
 
 //    private var _exampleString: String? = null // TODO: use a default from R.string...
 //    private var _exampleColor: Int = Color.RED // TODO: use a default from R.color...
@@ -137,66 +138,12 @@ class MapView @JvmOverloads constructor(context: Context?, attr: AttributeSet? =
 //        }
 //    }
 
-    override fun onDraw(canvas: Canvas) {
-        super.onDraw(canvas)
+//    override fun onDraw(canvas: Canvas) {
+//        super.onDraw(canvas)
+//
+//    }
+//    init {
+//        initialise()
+//    }
 
-//        // TODO: consider storing these as member variables to reduce
-//        // allocations per draw cycle.
-//        val paddingLeft = paddingLeft
-//        val paddingTop = paddingTop
-//        val paddingRight = paddingRight
-//        val paddingBottom = paddingBottom
-//
-//        val contentWidth = width - paddingLeft - paddingRight
-//        val contentHeight = height - paddingTop - paddingBottom
-//
-//        exampleString?.let {
-//            // Draw the text.
-//            canvas.drawText(
-//                it,
-//                paddingLeft + (contentWidth - textWidth) / 2,
-//                paddingTop + (contentHeight + textHeight) / 2,
-//                textPaint
-//            )
-//        }
-//
-//        // Draw the example drawable on top of the text.
-//        exampleDrawable?.let {
-//            it.setBounds(
-//                paddingLeft, paddingTop,
-//                paddingLeft + contentWidth, paddingTop + contentHeight
-//            )
-//            it.draw(canvas)
-//        }
-//        for(i in pinArray)
-//        {
-//            var pin = i.point
-//            var fix = i.fixed
-//            var imageId = i.imageId
-//
-//            sourceToViewCoord(pin, vPin)
-//            var image = BitmapFactory.decodeResource(this.resources, imageId, options)
-//            w = density / 420f * image!!.getWidth()
-//            h = density / 420f * image!!.getHeight()
-//
-//            if(fix == 1) // 확대 축소에 따라 크기가 변하지 않음
-//            {
-//                image = Bitmap.createScaledBitmap(image!!, (w!!).toInt(), (h!!).toInt(), true)
-//                myPaint.textSize = 50.0f
-//            }
-//            else // 확대 축소에 따라 크기가 변함
-//            {
-//                image= Bitmap.createScaledBitmap(image!!, (w!!*s).toInt(), (h!!*s).toInt(), true)
-//                myPaint.textSize = 50.0f * s
-//            }
-//            val vX = vPin.x - image!!.width / i.width //(/2가 없는 경우 해당 좌표기준 좌측 위로 이미지가 생성됨)
-//            val vY = vPin.y - image!!.height / i.height
-//            canvas.drawBitmap(image!!, vX, vY, paint)
-//            myPaint.setColor(Color.BLUE)
-//            canvas.drawText(i.text, vPin.x, vPin.y+myPaint.textSize+20, myPaint)
-//        }
-    }
-    init {
-        initialise()
-    }
 }
