@@ -59,24 +59,29 @@ class InnerMapDB (private val context: Context, private val dbName: String) :
     }
 
     //DB 값
-    data class IndoorFloor(val idx: Int, val placeid: Int, val floorid: Int, val name: String, val mapname: String)
+    data class InnerFloor(val idx: Int, val placeid: Int, val floorid: Int, val name: String, val mapname: String)
 
-    data class
-
-    fun findLocation(x: Int, y: Int, mainActivity2: MainActivity2) {
-            val db = readableDatabase
-        val cursor = db.rawQuery("SELECT * FROM liner_8 WHERE x = $x AND y = $y", null)
-        var result = ""
-        while (cursor.moveToNext()) {
-            result = cursor.getString(2)
-        }
-        cursor.close()
-        db.close()
-        //listener.onLocationFound(result) 오류안뜨게 바꿔줘
-        mainActivity2.onLocationFound(result)
-    }
+    data class PlaceNode(val placeid: Int, val id: Double, val name: String, val nickname: String, val checkplace: Int,
+                         val x: Int, val y: Int, val floorid: Int, val type: Int, val mapname: String, val img1: Bitmap?, val img2: Bitmap?)
 
 
+    val floorList = mutableListOf<InnerFloor>()
+    val placeList = mutableListOf<PlaceNode>()
+
+//    fun findLocation(x: Int, y: Int, mainActivity2: MainActivity2) {
+//            val db = readableDatabase
+//        val cursor = db.rawQuery("SELECT * FROM liner_8 WHERE x = $x AND y = $y", null)
+//        var result = ""
+//        while (cursor.moveToNext()) {
+//            result = cursor.getString(2)
+//        }
+//        cursor.close()
+//        db.close()
+//        //listener.onLocationFound(result) 오류안뜨게 바꿔줘
+//        mainActivity2.onLocationFound(result)
+//    }
+//
+//
 
 
 
@@ -91,6 +96,13 @@ class InnerMapDB (private val context: Context, private val dbName: String) :
         TODO("Not yet implemented")
     }
 
+    fun getFloorsInner(): List<InnerMapDB.InnerFloor> {
+
+    }
+
+    fun getNodesPlace(): List<InnerMapDB.PlaceNode> {
+
+    }
 
 
 }
