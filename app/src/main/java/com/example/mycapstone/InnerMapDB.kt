@@ -58,20 +58,10 @@ class InnerMapDB (private val context: Context, private val dbName: String) :
         }
     }
 
-//    // liner_8 이미지에서 x와 y 좌표 값에 대해 해당하는 위치를 찾아내는 함수
-//    fun findLocation(x: Int, y: Int ): String {
-//        val db = readableDatabase
-//        val cursor = db.rawQuery("SELECT * FROM liner_8 WHERE x = $x AND y = $y", null)
-//        var result = ""
-//        while (cursor.moveToNext()) {
-//            result = cursor.getString(2)
-//        }
-//        cursor.close()
-//        db.close()
-//        listener.onLocationFound(result)
-//    }
-//
-//
+    //DB 값
+    data class IndoorFloor(val idx: Int, val placeid: Int, val floorid: Int, val name: String, val mapname: String)
+
+    data class
 
     fun findLocation(x: Int, y: Int, mainActivity2: MainActivity2) {
             val db = readableDatabase
