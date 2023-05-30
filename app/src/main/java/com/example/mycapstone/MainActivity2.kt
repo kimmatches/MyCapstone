@@ -10,6 +10,8 @@ import android.widget.TextView
 
 class MainActivity2 : AppCompatActivity() {
 
+    //지도
+    private lateinit var map: MapView
     // DB
     private lateinit var db: InnerMapDB
 
