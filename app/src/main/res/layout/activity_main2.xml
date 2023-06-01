@@ -6,14 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity2">
 
-    <Button
-        android:id="@+id/herebtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="현재 위치 가져오기"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
+<!--    <Button-->
+<!--        android:id="@+id/herebtn"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:text="현재 위치 가져오기"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        tools:layout_editor_absoluteX="0dp" />-->
 
     <!--        지도 레이아웃-->
 
@@ -22,15 +22,14 @@
     <com.example.mycapstone.MapView
         android:id="@+id/map"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginTop="4dp"
-        android:layout_weight="8.5"
+        android:layout_height="250dp"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/herebtn" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
-<!--        <ImageView-->
+    <!--        <ImageView-->
 
 <!--        android:id="@+id/floor_8"-->
 <!--        android:layout_width="wrap_content"-->

@@ -73,7 +73,6 @@ class InnerMapDB (private val context: Context, private val dbName: String) :
         val img2: Bitmap?
     )
 
-
     val floorList = mutableListOf<InnerFloor>()
     val placeList = mutableListOf<PlaceNode>()
 
@@ -128,23 +127,17 @@ class InnerMapDB (private val context: Context, private val dbName: String) :
         }
         return placeList
     }
+    fun findPlacetoXY(x: Int, y: Int, list: List<PlaceNode>, floorid: Int): PlaceNode? {
+        for (i in list) {
+            if (i.id.toInt() / 100 == floorid) {
+                if ((i.x - 30 <= x && x <= i.x + 30) && (i.y - 30 <= y && y <= i.y + 30)) {
+                    return i
+                }
+            }
+        }
 
-//    fun findLocation(x: Int, y: Int, mainActivity2: MainActivity2) {
-//            val db = readableDatabase
-//        val cursor = db.rawQuery("SELECT * FROM liner_8 WHERE x = $x AND y = $y", null)
-//        var result = ""
-//        while (cursor.moveToNext()) {
-//            result = cursor.getString(2)
-//        }
-//        cursor.close()
-//        db.close()
-//        //listener.onLocationFound(result) 오류안뜨게 바꿔줘
-//        mainActivity2.onLocationFound(result)
-//    }
-//
-//
-
-
+        return null
+    }
 
 
 
