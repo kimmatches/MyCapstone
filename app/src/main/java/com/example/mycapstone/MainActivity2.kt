@@ -1,17 +1,23 @@
 package com.example.mycapstone
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.PointF
+import android.graphics.Paint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
-import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-
+import android.widget.Toast
+import com.davemorrissey.labs.subscaleview.ImageSource
+import com.google.zxing.integration.android.IntentIntegrator
 
 
 class MainActivity2 : AppCompatActivity() {
@@ -38,53 +44,57 @@ class MainActivity2 : AppCompatActivity() {
 
     // 지도 좌표 비율
     var ratio = 0F
+//map
+    val array = arrayOf(100, 100)
+    var test_count = 0
+
+    private lateinit var imageView : MapView
+    var gestureDetector : GestureDetector? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-//        //DB
-//        db = InnerMapDB(this, "innermap.db")
-//
-//        floorsInner = db.getFloorsInner()
-//        nodesPlace = db.getNodesPlace()
+        //DB
+        db = InnerMapDB(this, "innermap.db")
 
         //layout 연결
         setContentView(R.layout.activity_main2)
+        imageView = findViewById(R.id.imageView)
+        imageView.maxScale = 1.5f
+        imageView?.setImage(ImageSource.resource(R.drawable.map_8))
 
-        //지도 창
-        map = findViewById(R.id.map)
-        map.maxScale = 1f
-        // 화면 비율
-        ratio = map.getResources().getDisplayMetrics().density.toFloat()
+        gestureDetector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
+            override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
+                var pointt = imageView?.viewToSourceCoord(e.x, e.y)
 
-        fun showInfo(id: InnerMapDB.PlaceNode?) {
-            if (id != null) {
-                // 정보 사진
-                infoPic1.setImageBitmap(id?.img1)
-                infoPic2.setImageBitmap(id?.img2)
+                if(test_count == 0) {
+                    test_count = 1
+                    imageView?.setPin(pointt)
 
-                // 지명
-                if (id.checkplace == 0) {
-                    infoText1.setText("${id?.name} (${id.nickname})")
+                    var s = (imageView?.minScale!! + imageView?.maxScale!!)/3
+                    imageView?.setScaleAndCenter(s!!, pointt)
                 }
                 else {
-                    infoText1.setText(id?.name)
+                    imageView?.addLine(pointt, Color.BLUE)
                 }
-                info.visibility = View.VISIBLE
-
-                map.animateScaleAndCenter(1f, PointF(id.x.toFloat()*ratio, id.y.toFloat()*ratio))?.start()
-                map.addPin(PointF(id.x.toFloat()*ratio, id.y.toFloat()*ratio), 1, R.drawable.bluepin)
-
-                return
+                check_area(pointt!!.x, pointt.y)
+                return true
             }
-            else{
-                info.visibility = View.GONE
-                map.clearPin()
-            }
-        }
-
+        })
+        imageView?.setOnTouchListener(View.OnTouchListener { view, motionEvent -> // OnTouchListner로 터치 이벤트 감지
+            gestureDetector!!.onTouchEvent( // gestureDectector로 터치 이벤트 처리
+                motionEvent
+            )
+        })
 
     }
 
+    private fun check_area(x:Float, y: Float) {
+        if (x <array[0] && y<array[1]) {
+            imageView?.clearPin()
+            val msg = "x: " + x + "y: " + y
+            Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
+        }
+    }
 }
+
+

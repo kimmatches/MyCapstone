@@ -16,31 +16,30 @@
 <!--        tools:layout_editor_absoluteX="0dp" />-->
 
     <!--        지도 레이아웃-->
-
+        <com.example.mycapstone.MapView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+<!--            app:src="@drawable/map_8" />-->
     <!--        지도 레이아웃 끝-->
 
-    <com.example.mycapstone.MapView
-        android:id="@+id/map"
-        android:layout_width="wrap_content"
-        android:layout_height="250dp"
-        android:layout_marginBottom="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
 
-    <!--        <ImageView-->
 
-<!--        android:id="@+id/floor_8"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="200dp"-->
-<!--        android:scaleType="fitEnd"-->
-<!--        android:src="@drawable/liner_8"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.0"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.792" />-->
+<!--        <ImageView-->
+<!--            android:id="@+id/map8"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="250dp"-->
+<!--            android:layout_marginBottom="100dp"-->
+<!--            android:scaleType="fitEnd"-->
+<!--            android:src="@drawable/map_8"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintHorizontal_bias="0.0"-->
+<!--            app:layout_constraintStart_toStartOf="parent" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
