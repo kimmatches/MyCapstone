@@ -102,9 +102,9 @@ class MapView @JvmOverloads constructor(context: Context?, attr: AttributeSet? =
 
 
         // 이미지 그리기
-        imageBitmap?.let {
-            canvas?.drawBitmap(it, 0f, 0f, null)
-        }
+//        imageBitmap?.let {
+//            canvas?.drawBitmap(it, 0f, 0f, null)
+//        }
 
         // 점 그리기
         canvas?.drawCircle(dotX, dotY, 10f, Paint().apply {
