@@ -37,9 +37,8 @@ class MainActivity2 : AppCompatActivity() {
         setContentView(R.layout.activity_main2)
 
         imageView = findViewById(R.id.customImageView)
-        imageView.maxScale = 1f
         imageView?.setImage(ImageSource.resource(R.drawable.lnner_8))
-        ratio = imageView.getResources().getDisplayMetrics().density.toFloat()
+
 
 
 

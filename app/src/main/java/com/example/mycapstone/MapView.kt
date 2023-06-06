@@ -87,7 +87,7 @@ class MapView @JvmOverloads constructor(context: Context?, attr: AttributeSet? =
 //        val point = PointF(200.0f, 300.0f)
 
         val density = resources.displayMetrics.densityDpi.toFloat()
-        iPin = BitmapFactory.decodeResource(this.resources, R.drawable.toilet)
+        iPin = BitmapFactory.decodeResource(this.resources, R.drawable.lnner_8)
         w = density / 420f * iPin!!.getWidth()
         h = density / 420f * iPin!!.getHeight()
         iPin = Bitmap.createScaledBitmap(iPin!!, w!!.toInt(), h!!.toInt(), true)
@@ -102,9 +102,9 @@ class MapView @JvmOverloads constructor(context: Context?, attr: AttributeSet? =
 
 
         // 이미지 그리기
-//        imageBitmap?.let {
-//            canvas?.drawBitmap(it, 0f, 0f, null)
-//        }
+        imageBitmap?.let {
+            canvas?.drawBitmap(it, 0f, 0f, null)
+        }
 
         // 점 그리기
         canvas?.drawCircle(dotX, dotY, 10f, Paint().apply {
