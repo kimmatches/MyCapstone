@@ -15,6 +15,11 @@ import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
  */
 class MapView @JvmOverloads constructor(context: Context?, attr: AttributeSet? = null) :
     SubsamplingScaleImageView(context, attr) {
+    //방금추가
+    private var imageBitmap: Bitmap? = null
+    private var dotX: Float = 0f
+    private var dotY: Float = 0f
+    //
     private val paint = Paint()
     private val vPin = PointF()
     private var sPin: PointF? = null
@@ -76,28 +81,44 @@ class MapView @JvmOverloads constructor(context: Context?, attr: AttributeSet? =
         invalidate()
     }
 
-    // initialize는 무조건 필요한듯
-    private fun initialize() {
+    override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
+
+//        val point = PointF(200.0f, 300.0f)
+
         val density = resources.displayMetrics.densityDpi.toFloat()
         iPin = BitmapFactory.decodeResource(this.resources, R.drawable.toilet)
         w = density / 420f * iPin!!.getWidth()
         h = density / 420f * iPin!!.getHeight()
         iPin = Bitmap.createScaledBitmap(iPin!!, w!!.toInt(), h!!.toInt(), true)
 
-    }
-
-    override fun onDraw(canvas: Canvas) {
-        super.onDraw(canvas)
-
-        val point = PointF(200.0f, 300.0f)
-
         paint.color= Color.BLUE
-        paint.strokeWidth = 50f
+        paint.strokeWidth = 20f
         canvas.drawPoint(1230f, 560f, paint)
+        canvas.drawPoint(375f, 350f, paint)
+        canvas.drawPoint(270f, 350f, paint)
+        canvas.drawPoint(780f, 350f, paint)
+        canvas.drawPoint(855f, 400f, paint)
+
+
+        // 이미지 그리기
+        imageBitmap?.let {
+            canvas?.drawBitmap(it, 0f, 0f, null)
+        }
+
+        // 점 그리기
+        canvas?.drawCircle(dotX, dotY, 10f, Paint().apply {
+            color = Color.BLACK
+        })
+    }
+
+    fun setDotPosition(x: Float, y: Float) {
+        dotX = x
+        dotY = y
+        invalidate()
+    }
+
 
     }
-    init {
-        background = resources.getDrawable(R.drawable.white_space)
-        initialize()
-    }
-}
+//    init {initialize()}
+//}

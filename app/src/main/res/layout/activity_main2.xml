@@ -6,40 +6,40 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity2">
 
-<!--    <Button-->
-<!--        android:id="@+id/herebtn"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="16dp"-->
-<!--        android:text="현재 위치 가져오기"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        tools:layout_editor_absoluteX="0dp" />-->
 
-    <!--        지도 레이아웃-->
         <com.example.mycapstone.MapView
-            android:id="@+id/imageView"
+            android:id="@+id/customImageView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-<!--            app:src="@drawable/map_8" />-->
-    <!--        지도 레이아웃 끝-->
+            app:layout_constraintTop_toBottomOf="@+id/searchView_layout"
+            tools:layout_editor_absoluteX="0dp"
+            android:rotation="270"
+            android:scaleType="fitXY"
+            android:scaleX="1.8"
+            android:src="@drawable/lnner_8"/>
 
+<!--        <FrameLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
 
+<!--                <ImageView-->
+<!--                    android:id="@+id/imageView"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:rotation="270"-->
+<!--                    android:scaleType="fitXY"-->
+<!--                    android:scaleX="1.8"-->
+<!--                    android:src="@drawable/lnner_8" />-->
 
-<!--        <ImageView-->
-<!--            android:id="@+id/map8"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="250dp"-->
-<!--            android:layout_marginBottom="100dp"-->
-<!--            android:scaleType="fitEnd"-->
-<!--            android:src="@drawable/map_8"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintHorizontal_bias="0.0"-->
-<!--            app:layout_constraintStart_toStartOf="parent" />-->
+<!--                <View-->
+<!--                    android:layout_width="10dp"-->
+<!--                    android:layout_height="10dp"-->
+<!--                    android:layout_marginLeft="210dp"-->
+<!--                    android:layout_marginTop="650dp"-->
+<!--                    android:background="@android:color/black" />-->
+
+<!--        </FrameLayout>-->
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
