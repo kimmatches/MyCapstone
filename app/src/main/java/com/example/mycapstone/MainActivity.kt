@@ -41,7 +41,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         //Button을 클릭했을 떄 MainActivity2로 이동
-        setContentView(R.layout.activity_main)
         val mapbutton = findViewById<View>(R.id.qrButton)
         mapbutton.setOnClickListener {   //qrButton을 클릭했을 떄 MainActivity2로 이동
             val intent = Intent(this, MainActivity2::class.java)
