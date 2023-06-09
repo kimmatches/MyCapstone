@@ -4,18 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     tools:context=".MainActivity2">
 
+<LinearLayout
+    android:id="@+id/a"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
 
-                <com.example.mycapstone.MapView
-                    android:id="@+id/customImageView"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:rotation="270"
-                    android:src="@drawable/lnner_8"
-                    />
+    <com.example.mycapstone.MapView
+        android:id="@+id/customImageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-        <!--        <FrameLayout-->
+</LinearLayout>
+
+
+
+    <!--        <FrameLayout-->
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="match_parent">-->
 

@@ -33,6 +33,8 @@ class MapView @JvmOverloads constructor(context: Context?, attr: AttributeSet? =
 
     val customMatrix = Matrix()
 
+    private var scaleFactor = 1.0f
+
 
     var w: Float? = null
     var h: Float? = null
@@ -57,12 +59,12 @@ class MapView @JvmOverloads constructor(context: Context?, attr: AttributeSet? =
      */
 
     // addPin()을 이용하여 핀을 추가하면서 핀의 좌표, 핀 이미지, 핀이 지도와 함께 크기 조정되는지 나타내는 플래그
-    fun addPin(nPin: PointF?, fix: Int?, imageID: Int?) {
-        pinArray.add(nPin!!)
-        fixedArray.add(fix!!)
-        imageArray.add(imageID!!)
-        invalidate()
-    }
+//    fun addPin(nPin: PointF?, fix: Int?, imageID: Int?) {
+//        pinArray.add(nPin!!)
+//        fixedArray.add(fix!!)
+//        imageArray.add(imageID!!)
+//        invalidate()
+//    }
 
     // 두 개의 좌표를 입력하면 두 좌표 사이에 선을 그림. 라인의 색상은 파라미터로 전달된 값에 따라 달라짐.
     fun addLine(point: PointF?, color: Int?) {
@@ -81,10 +83,29 @@ class MapView @JvmOverloads constructor(context: Context?, attr: AttributeSet? =
         invalidate()
     }
 
+    fun addPin(nPin: PointF?, fix: Int?, imageID: Int?) {
+        nPin?.let { pin ->
+            val scaledPin = PointF(pin.x * scaleFactor, pin.y * scaleFactor)
+            pinArray.add(scaledPin)
+            fixedArray.add(fix!!)
+            imageArray.add(imageID!!)
+            invalidate()
+        }
+    }
+
+    fun setDotPosition(x: Float, y: Float) {
+        dotX = x
+        dotY = y
+        invalidate()
+    }
+    fun setScaleFactor(factor: Float) {
+        scaleFactor = factor
+        invalidate()
+    }
+
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-
-//        val point = PointF(200.0f, 300.0f)
 
         val density = resources.displayMetrics.densityDpi.toFloat()
         iPin = BitmapFactory.decodeResource(this.resources, R.drawable.lnner_8)
@@ -98,7 +119,6 @@ class MapView @JvmOverloads constructor(context: Context?, attr: AttributeSet? =
         canvas.drawPoint(375f, 350f, paint)
         canvas.drawPoint(270f, 350f, paint)
         canvas.drawPoint(780f, 350f, paint)
-        canvas.drawPoint(855f, 400f, paint)
 
 
         // 이미지 그리기
@@ -110,13 +130,14 @@ class MapView @JvmOverloads constructor(context: Context?, attr: AttributeSet? =
         canvas?.drawCircle(dotX, dotY, 10f, Paint().apply {
             color = Color.BLACK
         })
+        for (i in pinArray.indices) {
+            val pin = pinArray[i]
+            val scaledX = pin.x / scaleFactor
+            val scaledY = pin.y / scaleFactor
+            canvas.drawCircle(scaledX, scaledY, 10f, paint)
+        }
     }
 
-    fun setDotPosition(x: Float, y: Float) {
-        dotX = x
-        dotY = y
-        invalidate()
-    }
 
 
     }
