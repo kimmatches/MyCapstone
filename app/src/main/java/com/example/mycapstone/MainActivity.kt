@@ -14,8 +14,8 @@ import com.example.mycapstone.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    val array = arrayOf(100, 100)
-    var test_count = 0
+
+
     var ratio = 0F
 
     private lateinit var imageView : MapView
@@ -38,43 +38,11 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity2::class.java)
             startActivity(intent)
         }
-            imageView = findViewById(R.id.imageView)
-            imageView.maxScale = 1f
-            imageView?.setImage(ImageSource.resource(R.drawable.map_8))
-            ratio = imageView.getResources().getDisplayMetrics().density.toFloat()
+        imageView = findViewById(R.id.imageView)
+        imageView.maxScale = 1f
+        imageView?.setImage(ImageSource.resource(R.drawable.map_8))
+        ratio = imageView.getResources().getDisplayMetrics().density.toFloat()
 
-            gestureDetector =
-                GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
-                    override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
-                        var pointt = imageView?.viewToSourceCoord(e.x, e.y)
-
-                        if (test_count == 0) {
-                            test_count = 1
-                            imageView?.setPin(pointt)
-
-                            var s = (imageView?.minScale!! + imageView?.maxScale!!) / 3
-                            imageView?.setScaleAndCenter(s!!, pointt)
-                        } else {
-                            imageView?.addLine(pointt, Color.BLUE)
-                        }
-                        check_area(pointt!!.x, pointt.y)
-                        return true
-                    }
-                })
-            imageView?.setOnTouchListener(View.OnTouchListener { view, motionEvent -> // OnTouchListner로 터치 이벤트 감지
-                gestureDetector!!.onTouchEvent( // gestureDectector로 터치 이벤트 처리
-                    motionEvent
-                )
-            })
-
-        }
-
-        private fun check_area(x:Float, y: Float) {
-            if (x <array[0] && y<array[1]) {
-                imageView?.clearPin()
-                val msg = "x: " + x + "y: " + y
-                Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
-            }
-        }
     }
+}
 

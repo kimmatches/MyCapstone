@@ -21,10 +21,10 @@ class MainActivity2 : AppCompatActivity() {
 
     private var scaleFactor = 1.0f
 
-    private lateinit var imageView : MapView
+    private lateinit var imageView: MapView
 
-    private var fixedDotX = 300f
-    private var fixedDotY = 400f
+    private var fixedDotX = 400f
+    private var fixedDotY = 500f
     private var dotX = fixedDotX
     private var dotY = fixedDotY
 
@@ -42,14 +42,18 @@ class MainActivity2 : AppCompatActivity() {
         imageView.setDotPosition(300f, 400f)
 
 
-        //mapview를 270도로 돌려줘
+        //mapview를 270도로 돌림
         imageView.rotation = 270F
 
 
+
+        //화면 고정
         val scaleGestureListener = object : ScaleGestureDetector.SimpleOnScaleGestureListener() {
             override fun onScale(detector: ScaleGestureDetector): Boolean {
                 scaleFactor *= detector.scaleFactor
                 imageView.setScaleFactor(scaleFactor)
+                updateFixedDotPosition()
+                imageView.invalidate()
                 return true
             }
         }
@@ -59,6 +63,19 @@ class MainActivity2 : AppCompatActivity() {
         }
 
 
+    }
+
+    private fun updateFixedDotPosition() {
+        val invMatrix = Matrix()
+        imageView.customMatrix.invert(invMatrix)
+        imageView.customMatrix.invert(invMatrix)
+
+        val srcPoints = floatArrayOf(fixedDotX, fixedDotY)
+        val dstPoints = floatArrayOf(0f, 0f)
+        invMatrix.mapPoints(dstPoints, srcPoints)
+
+        dotX = dstPoints[0] * scaleFactor
+        dotY = dstPoints[1] * scaleFactor
     }
 }
 
