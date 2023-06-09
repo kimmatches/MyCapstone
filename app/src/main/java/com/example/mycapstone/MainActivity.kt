@@ -2,17 +2,13 @@ package com.example.mycapstone
 
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.PointF
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.GestureDetector
-import android.view.MotionEvent
 import android.view.View
-import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import com.davemorrissey.labs.subscaleview.ImageSource
 import com.example.mycapstone.databinding.ActivityMainBinding
 
@@ -51,11 +47,15 @@ class MainActivity : AppCompatActivity() {
         imageView.maxScale = 1f
         imageView?.setImage(ImageSource.resource(R.drawable.map_8))
         ratio = imageView.getResources().getDisplayMetrics().density.toFloat()
-        imageView.classroom("801호",1230f, 595f,)
+
         imageView.setDotPosition(300f, 400f)
 
-    }
+        imageView.classroom("801호", 1230f, 595f)
+        imageView.classroom("802호", 1015f, 595f)
+        imageView.classroom("803호", 905f, 595f)
 
     }
+
+}
 
 

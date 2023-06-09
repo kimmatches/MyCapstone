@@ -131,9 +131,6 @@ class MainActivity2 : AppCompatActivity(), SensorEventListener {
     private fun log(msg: String) {
         Log.e(this.javaClass.simpleName, msg)
     }
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
 }
 
 

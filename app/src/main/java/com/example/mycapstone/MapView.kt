@@ -3,9 +3,6 @@ package com.example.mycapstone
 
 import android.content.Context
 import android.graphics.*
-import android.graphics.drawable.Drawable //?
-import android.media.Image
-import android.text.TextPaint
 import android.util.AttributeSet
 import android.view.View
 //import androidx.compose.ui.res.painterResource
@@ -30,6 +27,7 @@ class MapView @JvmOverloads constructor(context: Context?, attr: AttributeSet? =
     private var pinArray = ArrayList<PointF>()
     private var fixedArray = ArrayList<Int>()
     private var imageArray = ArrayList<Int>()
+    private val classrooms: ArrayList<Classroom> = ArrayList()
 
     val customMatrix = Matrix()
 
@@ -51,10 +49,8 @@ class MapView @JvmOverloads constructor(context: Context?, attr: AttributeSet? =
         invalidate()
     }
 
-    fun classroom(s:String,x:Float,y: Float){
-        classS = s
-        classX = x
-        classY = y
+    fun classroom(text: String, x: Float, y: Float){
+        classrooms.add(Classroom(text, x, y))
         invalidate()
     }
 
@@ -90,27 +86,23 @@ class MapView @JvmOverloads constructor(context: Context?, attr: AttributeSet? =
             canvas.drawCircle(scaledX, scaledY, 10f, paint)
         }
 
+        // 마커 텍스트
         canvas?.drawText(classS,classX,classY,Paint().apply{
             color = Color.BLACK
             textSize = 30f
             textAlign = Paint.Align.CENTER
         })
-        for (i in pinArray.indices) {
-            val pin = pinArray[i]
-            val scaledX = pin.x / scaleFactor
-            val scaledY = pin.y / scaleFactor
-            canvas.drawText(classS,scaledX,scaledY, paint)
-        }
-
-        class CustomView(context: Context) : View(context) {
-            private val textPaint = Paint()
-            init {
-                textPaint.color = Color.BLACK
-                textPaint.textSize = 30f
-            }
+        for (classroom in classrooms) {
+            canvas.drawText(classroom.text, classroom.x, classroom.y, Paint().apply {
+                color = Color.BLACK
+                textSize = 30f
+                textAlign = Paint.Align.CENTER
+            })
         }
 
     }
+    private data class Classroom(val text: String, val x: Float, val y: Float)
+
 
 }
 
