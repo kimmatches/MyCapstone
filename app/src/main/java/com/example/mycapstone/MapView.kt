@@ -64,10 +64,10 @@ class MapView @JvmOverloads constructor(context: Context?, attr: AttributeSet? =
 
         paint.color = Color.BLUE
         paint.strokeWidth = 20f
-        canvas.drawPoint(1230f, 560f, paint)
-        canvas.drawPoint(375f, 350f, paint)
-        canvas.drawPoint(270f, 350f, paint)
-        canvas.drawPoint(780f, 350f, paint)
+//        canvas.drawPoint(1230f, 560f, paint)
+//        canvas.drawPoint(375f, 350f, paint)
+//        canvas.drawPoint(270f, 350f, paint)
+//        canvas.drawPoint(780f, 350f, paint)
 
 
         // 이미지 그리기
