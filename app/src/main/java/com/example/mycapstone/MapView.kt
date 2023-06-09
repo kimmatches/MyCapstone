@@ -16,14 +16,16 @@ import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
 class MapView @JvmOverloads constructor(context: Context?, attr: AttributeSet? = null) :
     SubsamplingScaleImageView(context, attr) {
 
-
-
+    private val textPaint: Paint = Paint()
 
     //방금추가
     private var imageBitmap: Bitmap? = null
     private var dotX: Float = 0f
     private var dotY: Float = 0f
     private val paint = Paint()
+    private var classX: Float = 0f
+    private var classY: Float = 0f
+    private var classS: String = String()
 
     private var pinArray = ArrayList<PointF>()
     private var fixedArray = ArrayList<Int>()
@@ -32,9 +34,6 @@ class MapView @JvmOverloads constructor(context: Context?, attr: AttributeSet? =
     val customMatrix = Matrix()
 
     private var scaleFactor = 1.0f
-
-
-
 
     fun addPin(nPin: PointF?, fix: Int?, imageID: Int?) {
         nPin?.let { pin ->
@@ -51,18 +50,23 @@ class MapView @JvmOverloads constructor(context: Context?, attr: AttributeSet? =
         dotY = y
         invalidate()
     }
+
+    fun classroom(s:String,x:Float,y: Float){
+        classS = s
+        classX = x
+        classY = y
+        invalidate()
+    }
+
     fun setScaleFactor(factor: Float) {
         scaleFactor = factor
         invalidate()
     }
 
-
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-
-
-        paint.color= Color.BLUE
+        paint.color = Color.BLUE
         paint.strokeWidth = 20f
         canvas.drawPoint(1230f, 560f, paint)
         canvas.drawPoint(375f, 350f, paint)
@@ -85,6 +89,28 @@ class MapView @JvmOverloads constructor(context: Context?, attr: AttributeSet? =
             val scaledY = pin.y / scaleFactor
             canvas.drawCircle(scaledX, scaledY, 10f, paint)
         }
-    }
+
+        canvas?.drawText(classS,classX,classY,Paint().apply{
+            color = Color.BLACK
+            textSize = 30f
+            textAlign = Paint.Align.CENTER
+        })
+        for (i in pinArray.indices) {
+            val pin = pinArray[i]
+            val scaledX = pin.x / scaleFactor
+            val scaledY = pin.y / scaleFactor
+            canvas.drawText(classS,scaledX,scaledY, paint)
+        }
+
+        class CustomView(context: Context) : View(context) {
+            private val textPaint = Paint()
+            init {
+                textPaint.color = Color.BLACK
+                textPaint.textSize = 30f
+            }
+        }
 
     }
+
+}
+
