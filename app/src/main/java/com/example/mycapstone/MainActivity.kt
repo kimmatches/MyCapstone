@@ -30,9 +30,17 @@ class MainActivity : AppCompatActivity() {
     private lateinit var info: FrameLayout
     private lateinit var infoText1: TextView
 
+    // Gesture 초기화
+    private lateinit var scaleGestureDetector: ScaleGestureDetector
+    private var initialPinSize = 0F
+
     var ratio = 0F
 
+    private var lastFocusX: Float = 0f
+    private var lastFocusY: Float = 0f
+
     private lateinit var imageView : MapView
+    var gestureDetector : GestureDetector? = null
     private lateinit var innerMapDB: InnerMapDB
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,6 +64,7 @@ class MainActivity : AppCompatActivity() {
         // mapView 띄우기(지도)
         imageView = findViewById(R.id.imageView)
         imageView.maxScale = 1f
+        imageView.minScale = 1f
         imageView?.setImage(ImageSource.resource(R.drawable.map_8))
         ratio = imageView.getResources().getDisplayMetrics().density.toFloat()
 
@@ -99,17 +108,19 @@ class MainActivity : AppCompatActivity() {
 
         innerMapDB = InnerMapDB(this, "cap.db")
 
-        imageView.setOnTouchListener { _, event ->
-            when (event.action) {
-                MotionEvent.ACTION_UP -> {
-                    val clickedClassroom = getClickedClassroom(event.x, event.y)
-                    if (clickedClassroom != null) {
-                        Toast.makeText(this, clickedClassroom, Toast.LENGTH_SHORT).show()
-                    }
-                    true
+        val gestureDetector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
+            override fun onSingleTapUp(e: MotionEvent): Boolean {
+                val clickedClassroom = getClickedClassroom(e.x, e.y)
+                if (clickedClassroom != null) {
+                    Toast.makeText(this@MainActivity, clickedClassroom, Toast.LENGTH_SHORT).show()
                 }
-                else -> false
+                return true
             }
+        })
+
+        imageView.setOnTouchListener { _, event ->
+            gestureDetector.onTouchEvent(event)
+            true
         }
 
     }
