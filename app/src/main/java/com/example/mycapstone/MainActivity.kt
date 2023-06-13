@@ -13,11 +13,8 @@ import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.RelativeLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import com.davemorrissey.labs.subscaleview.ImageSource
 import com.example.mycapstone.databinding.ActivityMainBinding
 import kotlin.math.max
@@ -26,21 +23,11 @@ import kotlin.math.min
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    // 정보창 및 표시될 사진, 지명, 접근성
-    private lateinit var info: FrameLayout
-    private lateinit var infoText1: TextView
-
-    // Gesture 초기화
-    private lateinit var scaleGestureDetector: ScaleGestureDetector
-    private var initialPinSize = 0F
+    private lateinit var spinner: Spinner
 
     var ratio = 0F
 
-    private var lastFocusX: Float = 0f
-    private var lastFocusY: Float = 0f
-
     private lateinit var imageView : MapView
-    var gestureDetector : GestureDetector? = null
     private lateinit var innerMapDB: InnerMapDB
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,14 +50,13 @@ class MainActivity : AppCompatActivity() {
         }
         // mapView 띄우기(지도)
         imageView = findViewById(R.id.imageView)
+
+
         imageView.maxScale = 1f
         imageView.minScale = 1f
         imageView?.setImage(ImageSource.resource(R.drawable.map_8))
         ratio = imageView.getResources().getDisplayMetrics().density.toFloat()
 
-        // 정보창
-        info = findViewById(R.id.info)
-        infoText1 = findViewById(R.id.text1)
 
         // 점찍기
         imageView.setDotPosition(300f, 400f)
@@ -119,11 +105,92 @@ class MainActivity : AppCompatActivity() {
         })
 
         imageView.setOnTouchListener { _, event ->
-            gestureDetector.onTouchEvent(event)
-            true
-        }
+            when (event.action) {
+                MotionEvent.ACTION_UP -> {
+                    val clickedClassroom = getClickedClassroom(event.x, event.y)
+                    if (clickedClassroom != null) {
+                        val message: String = when (clickedClassroom) {
 
+                            "801A" -> "MIS,ERP 실습실"
+                            "801B" -> "금융공학 실습실"
+                            "802호" -> "CIM 실험실"
+                            "휴게실" -> "휴게실입니다."
+                            "804호" -> "스정통 1학년 설계실"
+                            "화장실" -> "화장실입니다."
+                            "805호" -> "스정통 2학년 설계실"
+                            "스" -> "스마트정보통신공학과 사무실"
+                            "김" -> "김기봉교수 연구실"
+                            "박" -> "박현주교수 연구실"
+                            "장" -> "장영범교수 연구실"
+                            "이" -> "이시우교수 연구실"
+                            "정" -> "정성균교수 연구실"
+                            "안" -> "안범준교수 연구실"
+                            "서" -> "서광규교수 연구실"
+                            "최" -> "최성훈교수 연구실"
+                            "신" -> "신현준교수 연구실"
+                            "김" -> "김길환교수 연구실"
+                            "경" -> "경영공학과 사무실"
+                            "820호" -> "IT 실습실"
+                            "821호" -> "경영공학과 주강의실"
+                            "계단" -> "비상 계단입니다."
+
+                            else -> "알 수 없는 강의실입니다."
+                        }
+                        val builder = AlertDialog.Builder(this)
+                        builder.setTitle("강의실 정보")
+                        builder.setMessage(message)
+
+                        // 이미지 추가
+                        val imageView = ImageView(this)
+                        //imageView.setImageResource(R.drawable.toilet) // 이미지 리소스 설정
+                        when (clickedClassroom) {
+                            "스" -> imageView.setImageResource(R.drawable.toilet)
+                            "801A" -> imageView.setImageResource(R.drawable.toilet)
+                            "화장실" -> imageView.setImageResource(R.drawable.toilet)
+                            "801B" -> imageView.setImageResource(R.drawable.toilet)
+                            "802호" -> imageView.setImageResource(R.drawable.toilet)
+                            "휴게실" -> imageView.setImageResource(R.drawable.pin)
+                            "804호" -> imageView.setImageResource(R.drawable.toilet)
+                            "805호" -> imageView.setImageResource(R.drawable.toilet)
+                            "스" -> imageView.setImageResource(R.drawable.toilet)
+                            "김" -> imageView.setImageResource(R.drawable.toilet)
+                            "박" -> imageView.setImageResource(R.drawable.toilet)
+                            "장" -> imageView.setImageResource(R.drawable.toilet)
+                            "이" -> imageView.setImageResource(R.drawable.toilet)
+                            "정" -> imageView.setImageResource(R.drawable.toilet)
+                            "안" -> imageView.setImageResource(R.drawable.toilet)
+                            "서" -> imageView.setImageResource(R.drawable.toilet)
+                            "최" -> imageView.setImageResource(R.drawable.toilet)
+                            "신" -> imageView.setImageResource(R.drawable.toilet)
+                            "김" -> imageView.setImageResource(R.drawable.toilet)
+                            "경" -> imageView.setImageResource(R.drawable.toilet)
+                            "820호" -> imageView.setImageResource(R.drawable.toilet)
+                            "821호" -> imageView.setImageResource(R.drawable.toilet)
+                            "계단" -> imageView.setImageResource(R.drawable.toilet)
+
+                            else -> imageView.setImageResource(R.drawable.pin)
+                        }
+
+                        builder.setView(imageView)
+
+                        // 확인 버튼 설정
+                        builder.setPositiveButton("확인") { dialog, which ->
+                            // 확인 버튼을 눌렀을 때의 동작 처리
+                            // 예를 들어, 특정 작업을 수행하거나 추가적인 처리를 할 수 있습니다.
+                        }
+
+                        // 팝업 창 생성 및 표시
+                        val dialog = builder.create()
+                        dialog.show()
+                    }
+                    true
+                }
+                else -> false
+            }
+        }
     }
+
+
 
     private fun getClickedClassroom(x:Float, y: Float): String? {
         return imageView.getClickedClassroom(x, y)

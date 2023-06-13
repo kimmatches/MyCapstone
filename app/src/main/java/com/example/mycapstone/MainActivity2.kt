@@ -123,26 +123,12 @@ class MainActivity2 : AppCompatActivity(), SensorEventListener {
                 val newX = 270f + (stepCount * 10)
                 imageView.setDotPosition(newX, 460f)
 
-                if (newX == 400f ) {
+                if (newX == 1035f ) {
                     runOnUiThread {
-//                       //토스트메시지띄우기
-//                        //토스트메세지 텍스트 색깔바꾸기
-//                        val toast = Toast.makeText(this, "목적지에 도착하셨습니다. 1층까지 계단으로 내려가서 탈출 해 주세요", Toast.LENGTH_SHORT)
-//                        val toastView = toast.view
-//                        val toastTextView = toastView?.findViewById<TextView>(android.R.id.message)
-//                        if (toastTextView != null) {
-//                            toastTextView.setTextColor(Color.RED)
-//                        } // 텍스트 색상 변경
-//                        toast.show()
 
                         val builder = AlertDialog.Builder(this)
                         builder.setTitle("도착")
-                        builder.setMessage("목적지에 도착하셨습니다. 1층까지 계단으로 내려가서 탈출 해 주세요")
-
-                        // 이미지 추가
-//                        val imageView = ImageView(this)
-//                        imageView.setImageResource(R.drawable.your_image) // 이미지 리소스 설정
-//                        builder.setView(imageView)
+                        builder.setMessage("탈출구에 도착하셨습니다. 1층까지 계단으로 내려가서 탈출 해 주세요")
 
                         // 확인 버튼 설정
                         builder.setPositiveButton("확인") { dialog, which ->
