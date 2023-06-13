@@ -1,6 +1,6 @@
 package com.example.mycapstone
 
-import android.app.Dialog
+import MainActivity2
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -13,7 +13,13 @@ import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.RelativeLayout
+import android.widget.Spinner
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.davemorrissey.labs.subscaleview.ImageSource
 import com.example.mycapstone.databinding.ActivityMainBinding
@@ -23,7 +29,9 @@ import kotlin.math.min
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
-    private lateinit var spinner: Spinner
+    // 정보창 및 표시될 사진, 지명, 접근성
+    private lateinit var info: FrameLayout
+    private lateinit var infoText1: TextView
 
     var ratio = 0F
 
@@ -35,6 +43,15 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val spinner = findViewById<Spinner>(R.id.spinner)
+
+        val itemList = listOf("8층", "6층", "1층")
+
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, itemList)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+
         var qrCodeScan = QRCodeScan(this)
 //        var mainActivity2 = MainActivity2()
         /** Click */
@@ -50,16 +67,16 @@ class MainActivity : AppCompatActivity() {
         }
         // mapView 띄우기(지도)
         imageView = findViewById(R.id.imageView)
-
-
         imageView.maxScale = 1f
-        imageView.minScale = 1f
         imageView?.setImage(ImageSource.resource(R.drawable.map_8))
         ratio = imageView.getResources().getDisplayMetrics().density.toFloat()
 
-
         // 점찍기
-        imageView.setDotPosition(300f, 400f)
+        //imageView.setDotPosition(300f, 400f)
+
+        innerMapDB = InnerMapDB(this, "cap.db")
+        imageView.setInnerMapDB(innerMapDB)
+        //imageView.addPinFromDB(1230f, 560f)
 
         // 텍스트(강의실)
         imageView.classroom("801A", 1230f, 595f)
@@ -94,16 +111,6 @@ class MainActivity : AppCompatActivity() {
 
         innerMapDB = InnerMapDB(this, "cap.db")
 
-        val gestureDetector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
-            override fun onSingleTapUp(e: MotionEvent): Boolean {
-                val clickedClassroom = getClickedClassroom(e.x, e.y)
-                if (clickedClassroom != null) {
-                    Toast.makeText(this@MainActivity, clickedClassroom, Toast.LENGTH_SHORT).show()
-                }
-                return true
-            }
-        })
-
         imageView.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_UP -> {
@@ -116,7 +123,6 @@ class MainActivity : AppCompatActivity() {
                             "802호" -> "CIM 실험실"
                             "휴게실" -> "휴게실입니다."
                             "804호" -> "스정통 1학년 설계실"
-                            "화장실" -> "화장실입니다."
                             "805호" -> "스정통 2학년 설계실"
                             "스" -> "스마트정보통신공학과 사무실"
                             "김" -> "김기봉교수 연구실"
@@ -137,40 +143,12 @@ class MainActivity : AppCompatActivity() {
                             else -> "알 수 없는 강의실입니다."
                         }
                         val builder = AlertDialog.Builder(this)
-                        builder.setTitle("강의실 정보")
+                        builder.setTitle("도착")
                         builder.setMessage(message)
 
-                        // 이미지 추가
+//                 이미지 추가
                         val imageView = ImageView(this)
-                        //imageView.setImageResource(R.drawable.toilet) // 이미지 리소스 설정
-                        when (clickedClassroom) {
-                            "스" -> imageView.setImageResource(R.drawable.toilet)
-                            "801A" -> imageView.setImageResource(R.drawable.toilet)
-                            "화장실" -> imageView.setImageResource(R.drawable.toilet)
-                            "801B" -> imageView.setImageResource(R.drawable.toilet)
-                            "802호" -> imageView.setImageResource(R.drawable.toilet)
-                            "휴게실" -> imageView.setImageResource(R.drawable.pin)
-                            "804호" -> imageView.setImageResource(R.drawable.toilet)
-                            "805호" -> imageView.setImageResource(R.drawable.toilet)
-                            "스" -> imageView.setImageResource(R.drawable.toilet)
-                            "김" -> imageView.setImageResource(R.drawable.toilet)
-                            "박" -> imageView.setImageResource(R.drawable.toilet)
-                            "장" -> imageView.setImageResource(R.drawable.toilet)
-                            "이" -> imageView.setImageResource(R.drawable.toilet)
-                            "정" -> imageView.setImageResource(R.drawable.toilet)
-                            "안" -> imageView.setImageResource(R.drawable.toilet)
-                            "서" -> imageView.setImageResource(R.drawable.toilet)
-                            "최" -> imageView.setImageResource(R.drawable.toilet)
-                            "신" -> imageView.setImageResource(R.drawable.toilet)
-                            "김" -> imageView.setImageResource(R.drawable.toilet)
-                            "경" -> imageView.setImageResource(R.drawable.toilet)
-                            "820호" -> imageView.setImageResource(R.drawable.toilet)
-                            "821호" -> imageView.setImageResource(R.drawable.toilet)
-                            "계단" -> imageView.setImageResource(R.drawable.toilet)
-
-                            else -> imageView.setImageResource(R.drawable.pin)
-                        }
-
+                        imageView.setImageResource(R.drawable.pin) // 이미지 리소스 설정
                         builder.setView(imageView)
 
                         // 확인 버튼 설정
@@ -179,9 +157,6 @@ class MainActivity : AppCompatActivity() {
                             // 예를 들어, 특정 작업을 수행하거나 추가적인 처리를 할 수 있습니다.
                         }
 
-                        // 팝업 창 생성 및 표시
-                        val dialog = builder.create()
-                        dialog.show()
                     }
                     true
                 }
@@ -190,13 +165,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-
     private fun getClickedClassroom(x:Float, y: Float): String? {
         return imageView.getClickedClassroom(x, y)
     }
-
 }
-
-
-
