@@ -1,34 +1,39 @@
 package com.example.mycapstone
 
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.PointF
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.GestureDetector
+import android.view.InputDevice
+import android.view.MotionEvent
+import android.view.ScaleGestureDetector
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import com.davemorrissey.labs.subscaleview.ImageSource
 import com.example.mycapstone.databinding.ActivityMainBinding
+import kotlin.math.max
+import kotlin.math.min
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     // 정보창 및 표시될 사진, 지명, 접근성
     private lateinit var info: FrameLayout
-    private lateinit var infoPic1: ImageView
-    private lateinit var infoPic2: ImageView
     private lateinit var infoText1: TextView
-    private lateinit var infoText2: TextView
 
     var ratio = 0F
 
     private lateinit var imageView : MapView
-    var gestureDetector : GestureDetector? = null
+    private lateinit var innerMapDB: InnerMapDB
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,14 +53,20 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity2::class.java)
             startActivity(intent)
         }
-
+        // mapView 띄우기(지도)
         imageView = findViewById(R.id.imageView)
         imageView.maxScale = 1f
         imageView?.setImage(ImageSource.resource(R.drawable.map_8))
         ratio = imageView.getResources().getDisplayMetrics().density.toFloat()
 
+        // 정보창
+        info = findViewById(R.id.info)
+        infoText1 = findViewById(R.id.text1)
+
+        // 점찍기
         imageView.setDotPosition(300f, 400f)
 
+        // 텍스트(강의실)
         imageView.classroom("801A", 1230f, 595f)
         imageView.classroom("801B", 1115f, 595f)
         imageView.classroom("802호", 1015f, 595f)
@@ -84,10 +95,30 @@ class MainActivity : AppCompatActivity() {
         imageView.classroom("계단", 1035f, 390f)
         imageView.classroom("계단", 1010f, 305f)
 
+        imageView.addPin(PointF(1230f, 560f))
 
+        innerMapDB = InnerMapDB(this, "cap.db")
+
+        imageView.setOnTouchListener { _, event ->
+            when (event.action) {
+                MotionEvent.ACTION_UP -> {
+                    val clickedClassroom = getClickedClassroom(event.x, event.y)
+                    if (clickedClassroom != null) {
+                        Toast.makeText(this, clickedClassroom, Toast.LENGTH_SHORT).show()
+                    }
+                    true
+                }
+                else -> false
+            }
+        }
 
     }
 
+    private fun getClickedClassroom(x:Float, y: Float): String? {
+        return imageView.getClickedClassroom(x, y)
+    }
+
 }
+
 
 

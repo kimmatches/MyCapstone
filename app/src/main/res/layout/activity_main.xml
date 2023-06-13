@@ -43,8 +43,39 @@
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-
     </LinearLayout>
+
+    <!-- 정보창 레이아웃 -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/info"
+        android:visibility="gone" >
+
+        <!-- 정보창에 담길 레이아웃 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="장소명"
+                    android:layout_gravity="center"
+                    android:id="@+id/text1"
+                    android:textSize="30sp">
+                </TextView>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </FrameLayout>
 
 
 

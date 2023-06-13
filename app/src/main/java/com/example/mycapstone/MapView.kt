@@ -4,7 +4,9 @@ package com.example.mycapstone
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
+import android.widget.Toast
 //import androidx.compose.ui.res.painterResource
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
 /**
@@ -25,20 +27,19 @@ class MapView @JvmOverloads constructor(context: Context?, attr: AttributeSet? =
     private var classS: String = String()
 
     private var pinArray = ArrayList<PointF>()
+    private val originalPinArray = ArrayList<PointF>()
     private var fixedArray = ArrayList<Int>()
     private var imageArray = ArrayList<Int>()
     private val classrooms: ArrayList<Classroom> = ArrayList()
 
-    val customMatrix = Matrix()
 
     private var scaleFactor = 1.0f
 
-    fun addPin(nPin: PointF?, fix: Int?, imageID: Int?) {
+    fun addPin(nPin: PointF?) {
         nPin?.let { pin ->
             val scaledPin = PointF(pin.x * scaleFactor, pin.y * scaleFactor)
             pinArray.add(scaledPin)
-            fixedArray.add(fix!!)
-            imageArray.add(imageID!!)
+            originalPinArray.add(pin)
             invalidate()
         }
     }
@@ -49,10 +50,12 @@ class MapView @JvmOverloads constructor(context: Context?, attr: AttributeSet? =
         invalidate()
     }
 
+
     fun classroom(text: String, x: Float, y: Float){
         classrooms.add(Classroom(text, x, y))
         invalidate()
     }
+
 
     fun setScaleFactor(factor: Float) {
         scaleFactor = factor
@@ -61,19 +64,6 @@ class MapView @JvmOverloads constructor(context: Context?, attr: AttributeSet? =
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-
-        paint.color = Color.BLUE
-        paint.strokeWidth = 20f
-//        canvas.drawPoint(1230f, 560f, paint)
-//        canvas.drawPoint(375f, 350f, paint)
-//        canvas.drawPoint(270f, 350f, paint)
-//        canvas.drawPoint(780f, 350f, paint)
-
-
-        // 이미지 그리기
-        imageBitmap?.let {
-            canvas?.drawBitmap(it, 0f, 0f, null)
-        }
 
         // 점 그리기
         canvas?.drawCircle(dotX, dotY, 10f, Paint().apply {
@@ -101,8 +91,22 @@ class MapView @JvmOverloads constructor(context: Context?, attr: AttributeSet? =
         }
 
     }
+
     private data class Classroom(val text: String, val x: Float, val y: Float)
 
+    fun getClickedClassroom(x: Float, y: Float): String? {
+        for (classroom in classrooms) {
+            val scaledX = classroom.x / scaleFactor
+            val scaledY = classroom.y / scaleFactor
 
+            val threshold = 50f
+            if (x >= scaledX - threshold && x <= scaledX + threshold &&
+                y >= scaledY - threshold && y <= scaledY + threshold
+            ) {
+                return classroom.text
+            }
+        }
+        return null
+    }
 }
 

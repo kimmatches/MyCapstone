@@ -149,11 +149,11 @@ class InnerMapDB (private val context: Context, private val dbName: String) :
 
 
     override fun onCreate(p0: SQLiteDatabase?) {
-        TODO("Not yet implemented")
+
     }
 
     override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
-        TODO("Not yet implemented")
+
     }
 
 
