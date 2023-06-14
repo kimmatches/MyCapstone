@@ -40,6 +40,7 @@ class MapView @JvmOverloads constructor(context: Context?, attr: AttributeSet? =
             val scaledPin = PointF(pin.x * scaleFactor, pin.y * scaleFactor)
             pinArray.add(scaledPin)
             originalPinArray.add(pin)
+
             invalidate()
         }
     }
@@ -64,6 +65,9 @@ class MapView @JvmOverloads constructor(context: Context?, attr: AttributeSet? =
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+        paint.color = Color.RED
+        paint.strokeWidth = 20f
+        canvas.drawPoint(1035f, 390f, paint)
 
         // 점 그리기
         canvas?.drawCircle(dotX, dotY, 10f, Paint().apply {

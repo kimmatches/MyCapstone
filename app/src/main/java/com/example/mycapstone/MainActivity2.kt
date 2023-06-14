@@ -3,6 +3,7 @@ package com.example.mycapstone
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.PointF
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -53,9 +54,9 @@ class MainActivity2 : AppCompatActivity(), SensorEventListener {
         imageView = findViewById(R.id.customImageView)
         imageView?.setImage(ImageSource.resource(R.drawable.lnner_83))
         //imageView.setDotPosition(270f, 460f)
-        imageView.setDotPosition(100f, 200f)
+        //imageView.setDotPosition(100f, 200f)
 //        imageView.setDotPosition(qrData)
-
+        imageView.classroom("탈출구", 1035f, 390f)
         if (qrData != null) {
             val dotPosition = parseDotPositionFromQRData(qrData)
             imageView.setDotPosition(dotPosition.first, dotPosition.second)
@@ -129,17 +130,22 @@ class MainActivity2 : AppCompatActivity(), SensorEventListener {
 
             if (isRunning && isIncrementStep == 1) {
                 stepCount++
+
+                //val newX = 1170f - (stepCount * 10)
                 val newX = 270f + (stepCount * 10)
                 imageView.setDotPosition(newX, 460f)
+//                if (newX == 270f) {
+//                    val newX = 270f + (stepCount * 10)
+//                    imageView.setDotPosition(newX, 460f)
+//                }
+//                //imageView.setDotPosition(newX, 460f)
+//
+//                if (newX == 1170f) {
+//                    val newX = 1170f - (stepCount * 10)
+//                    imageView.setDotPosition(newX, 460f)
+//                }
 
-                if (newX > 1170f) {
-                    stepCount++
-                    val newX = 1170f - (stepCount * 10)
-                    imageView.setDotPosition(newX, 460f)
-                }
-
-
-                if (newX == 1035f ) {
+                if (newX == 1030f ) {
                     runOnUiThread {
 
                         val builder = AlertDialog.Builder(this)

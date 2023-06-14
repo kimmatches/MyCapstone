@@ -28,6 +28,30 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val spinner = findViewById<Spinner>(R.id.spinner)
+
+        val itemList = listOf("8층", "6층", "1층")
+
+
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, itemList)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                // 선택된 항목에 따라 이미지 변경
+                when (position) {
+                    0 -> imageView?.setImage(ImageSource.resource(R.drawable.map_8))
+                    1 -> imageView?.setImage(ImageSource.resource(R.drawable.soomung))
+                    2 -> imageView?.setImage(ImageSource.resource(R.drawable.pin))
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                // 아무 항목도 선택되지 않았을 때의 동작
+            }
+        }
         var qrCodeScan = QRCodeScan(this)
 //        var mainActivity2 = MainActivity2()
         /** Click */
