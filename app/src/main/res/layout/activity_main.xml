@@ -40,10 +40,10 @@
 
         </LinearLayout>
 
-<!--        <Spinner-->
-<!--            android:id="@+id/spinner"-->
-<!--            android:layout_width="203dp"-->
-<!--            android:layout_height="52dp" />-->
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="203dp"
+            android:layout_height="52dp" />
         <TextView
 
             android:layout_width="match_parent"
