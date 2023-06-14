@@ -1,23 +1,16 @@
 package com.example.mycapstone
 
-import android.app.Dialog
-import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.PointF
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.GestureDetector
-import android.view.InputDevice
 import android.view.MotionEvent
-import android.view.ScaleGestureDetector
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import com.davemorrissey.labs.subscaleview.ImageSource
 import com.example.mycapstone.databinding.ActivityMainBinding
-import kotlin.math.max
 import kotlin.math.min
 
 class MainActivity : AppCompatActivity() {
@@ -58,8 +51,6 @@ class MainActivity : AppCompatActivity() {
         ratio = imageView.getResources().getDisplayMetrics().density.toFloat()
 
 
-        // 점찍기
-        imageView.setDotPosition(300f, 400f)
 
         // 텍스트(강의실)
         imageView.classroom("801A", 1230f, 595f)
@@ -89,8 +80,6 @@ class MainActivity : AppCompatActivity() {
         imageView.classroom("전층", 855f, 300f)
         imageView.classroom("계단", 1035f, 390f)
         imageView.classroom("계단", 1010f, 305f)
-
-        imageView.addPin(PointF(1230f, 560f))
 
         innerMapDB = InnerMapDB(this, "cap.db")
 

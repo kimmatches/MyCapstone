@@ -29,8 +29,8 @@ class QRCodeScan(private val act: MainActivity) {
             if(intentResult.contents != null){
                 //QRCode Scan result 있는경우
                 Toast.makeText(act, "인식된 QR-data: ${intentResult.contents}", Toast.LENGTH_SHORT).show()
-                // QR 코드가 성공적으로 인식되었을 때 MainActivity2를 시작합니다.
                 val intent = Intent(act, MainActivity2::class.java)
+                intent.putExtra("qrData", intentResult.contents) // 따온 QR 데이터를 "qrData"라는 키로 넣어줍니다.
                 act.startActivity(intent)
             }else{
                 //QRCode Scan result 없는경우

@@ -3,7 +3,6 @@ package com.example.mycapstone
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -12,9 +11,6 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.ScaleGestureDetector
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -49,14 +45,23 @@ class MainActivity2 : AppCompatActivity(), SensorEventListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val qrData = intent.getStringExtra("qrData")
 
         //layout 연결
         setContentView(R.layout.activity_main2)
 
         imageView = findViewById(R.id.customImageView)
         imageView?.setImage(ImageSource.resource(R.drawable.lnner_83))
-        imageView.setDotPosition(270f, 460f)
+        //imageView.setDotPosition(270f, 460f)
+        imageView.setDotPosition(100f, 200f)
+//        imageView.setDotPosition(qrData)
 
+        if (qrData != null) {
+            val dotPosition = parseDotPositionFromQRData(qrData)
+            imageView.setDotPosition(dotPosition.first, dotPosition.second)
+        } else {
+            imageView.setDotPosition(200f, 400f)
+        }
 
         //mapview를 270도로 돌림
         imageView.rotation = 270F
@@ -97,6 +102,10 @@ class MainActivity2 : AppCompatActivity(), SensorEventListener {
         sensorManager = getSystemService(SensorManager::class.java)
     }
 
+    private fun parseDotPositionFromQRData(qrData: String): Pair<Float, Float> {
+        val splitData = qrData.split(",")
+        return Pair(splitData[0].toFloat(), splitData[1].toFloat())
+    }
     override fun onResume() {
         super.onResume()
         isRunning = true
@@ -122,6 +131,13 @@ class MainActivity2 : AppCompatActivity(), SensorEventListener {
                 stepCount++
                 val newX = 270f + (stepCount * 10)
                 imageView.setDotPosition(newX, 460f)
+
+                if (newX > 1170f) {
+                    stepCount++
+                    val newX = 1170f - (stepCount * 10)
+                    imageView.setDotPosition(newX, 460f)
+                }
+
 
                 if (newX == 1035f ) {
                     runOnUiThread {
@@ -152,6 +168,7 @@ class MainActivity2 : AppCompatActivity(), SensorEventListener {
         Log.e(this.javaClass.simpleName, msg)
     }
 }
+
 
 
 

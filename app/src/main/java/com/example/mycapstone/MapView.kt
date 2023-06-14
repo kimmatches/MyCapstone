@@ -108,5 +108,6 @@ class MapView @JvmOverloads constructor(context: Context?, attr: AttributeSet? =
         }
         return null
     }
+
 }
 
